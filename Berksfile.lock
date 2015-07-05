@@ -2,13 +2,16 @@ DEPENDENCIES
   aide
     path: .
   apt
+  cron (~> 1.6.1)
   test
     path: test/fixtures/cookbooks/test
   yum
 
 GRAPH
   aide (0.1.2)
+    cron (>= 0.0.0)
   apt (2.7.0)
+  cron (1.6.1)
   test (0.1.0)
     aide (>= 0.0.0)
   yum (3.6.0)

@@ -3,7 +3,7 @@ package 'aide' do
 end
 
 template node['aide']['config'] do
-  notifies :run, 'script[generate_database]', :delayed
+  notifies :run, 'bash[generate_database]', :delayed
 end
 
 cron_d 'aide' do

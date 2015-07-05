@@ -9,4 +9,6 @@ version '0.1.2'
 supports 'centos'
 supports 'ubuntu'
 
+depends 'cron'
+
 recipe 'aide', 'Installs and configures AIDE HIDS'

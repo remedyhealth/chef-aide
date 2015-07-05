@@ -8,9 +8,13 @@
 # your cookbook that relays on this one. Return to false when
 # rolling out to any non development enviorment.
 default['aide']['testmode'] = 'false'
-default['aide']['report_url'] = 'stdout'
 
-case node['platform']
+default['aide']['dbdir'] = '/var/lib/aide'
+default['aide']['gzip'] = 'yes'
+default['aide']['report_url'] = 'stdout'
+default['aide']['verbose'] = '5'
+
+case node['platform_family']
 when 'rhel'
   default['aide']['binary'] = '/usr/sbin/aide'
   default['aide']['config'] = '/etc/aide.conf'
@@ -19,11 +23,10 @@ when 'rhel'
 else
   default['aide']['binary'] = '/usr/bin/aide'
   default['aide']['config'] = '/etc/aide/aide.conf'
-  default['aide']['extra_parameters'] = '-c /etc/aide/aide.conf'
+  default['aide']['extra_parameters'] = "-c #{node['aide']['config']}"
   default['aide']['cron_service'] = 'cron'
 end
 
-default['aide']['dbdir'] = '/var/lib/aide'
 default['aide']['macros'] = {
   'NORMAL' => 'L+rmd160+sha256',
   'PERMS' => 'p+i+u+g+acl+selinux',

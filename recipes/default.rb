@@ -10,7 +10,7 @@ cron_d 'aide' do
   action :create
   minute '30'
   user 'root'
-  command "#{node["aide"]["binary"]} #{node["aide"]["extra_parameters"]} --check -V3"
+  command "#{node['aide']['binary']} #{node['aide']['extra_parameters']} --check -V3"
 end
 
 cron_d 'aide-detailed' do
@@ -19,7 +19,7 @@ cron_d 'aide-detailed' do
   hour '5'
   weekday '1'
   user 'root'
-  command "#{node["aide"]["binary"]} #{node["aide"]["extra_parameters"]} --check -V5"
+  command "#{node['aide']['binary']} #{node['aide']['extra_parameters']} --check -V5"
 end
 
 bash 'generate_database' do

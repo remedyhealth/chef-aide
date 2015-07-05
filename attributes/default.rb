@@ -16,7 +16,7 @@ when 'rhel'
   default['aide']['config'] = '/etc/aide.conf'
   default['aide']['extra_parameters'] = ''
   default['aide']['cron_service'] = 'crond'
-when 'debian', 'ubuntu'
+else
   default['aide']['binary'] = '/usr/bin/aide'
   default['aide']['config'] = '/etc/aide/aide.conf'
   default['aide']['extra_parameters'] = '-c /etc/aide/aide.conf'

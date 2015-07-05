@@ -17,6 +17,10 @@ describe 'aide::default' do
     }
   end
 
+  it 'notifies generate_database' do
+    expect(chef_run.template('/etc/aide/aide.conf')).to notify('bash[generate_database]').to(:run)
+  end
+
   it 'creates cron' do
     expect(chef_run).to create_cron_d('aide')
   end

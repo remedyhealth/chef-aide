@@ -1,3 +1,4 @@
+[![Cookbook Version](https://img.shields.io/cookbook/v/aide.svg)](https://community.opscode.com/cookbooks/aide)
 [![Build Status](https://travis-ci.org/mburns/chef-aide.svg)](https://travis-ci.org/mburns/chef-aide)
 
 Description

@@ -69,5 +69,6 @@ License and Author
 ==================
 
 Author:: Elliot Kendall (<elliot.kendall@ucsf.edu>)
+Contributor:: Michael Burns (<michael@mirwin.net>)
 
 Copyright:: 2013, The Regents of the University of California

@@ -13,7 +13,3 @@ group :integration do
   cookbook 'apt'
   cookbook 'yum'
 end
-
-group :local do
-  cookbook 'aide', path: File.dirname(__FILE__)
-end

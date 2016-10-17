@@ -11,7 +11,7 @@ describe 'aide::default' do
   end
 
   it 'writes config file' do
-    chef_run.node.set['aide']['paths'] = { '/data' => '!' }
+    chef_run.node.default['aide']['paths'] = { '/data' => '!' }
     expect(chef_run).to create_template('/etc/aide/aide.conf').with_content { |content|
       expect(content).to include('/data')
     }

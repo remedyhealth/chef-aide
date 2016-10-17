@@ -5,7 +5,7 @@
 # License:: Apache License, Version 2.0
 #
 
-node.set['aide']['paths'] = {
+node.default['aide']['paths'] = {
   '/data/.*' => '!'
 }
 

@@ -1,3 +1,4 @@
+# Managed by Chef
 # AIDE conf
 
 # The daily cron job depends on these paths
@@ -182,3 +183,17 @@ SerMemberDELog = Full+ANF
 # For daemons that log to a variable file name and have the live log
 # hardlinked to a static file name
 LinkedLog = Log-n
+
+# Macros
+<% @macros.each do |name,definition| %>
+<%= name %> = <%= definition %>
+<% end %>
+
+# Paths
+<% @paths.each do |path,definition| %>
+<% if definition == '!' %>
+!<%= path %>
+<% else %>
+<%= path %> <%= definition %>
+<% end %>
+<% end %>

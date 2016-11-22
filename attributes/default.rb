@@ -10,20 +10,25 @@
 default['aide']['testmode'] = 'false'
 
 default['aide']['dbdir'] = '/var/lib/aide'
-default['aide']['gzip'] = 'yes'
+default['aide']['gzip_dbout'] = 'yes'
 default['aide']['report_url'] = 'stdout'
 default['aide']['verbose'] = '5'
 default['aide']['database'] = '/var/lib/aide/aide.db'
 default['aide']['database_out'] = '/var/lib/aide/aide.db.new'
+default['aide']['mailto'] = 'root'
+default['aide']['command'] = 'check'
+default['aide']['quiet_reports'] = 'yes'
 
 case node['platform_family']
 when 'rhel'
   default['aide']['binary'] = '/usr/sbin/aide'
+  default['aide']['binary_init'] = '/usr/sbin/aide'
   default['aide']['config'] = '/etc/aide.conf'
   default['aide']['extra_parameters'] = ''
   default['aide']['cron_service'] = 'crond'
 else
   default['aide']['binary'] = '/usr/bin/aide'
+  default['aide']['binary_init'] = '/usr/sbin/aideinit'
   default['aide']['config'] = '/etc/aide/aide.conf'
   default['aide']['extra_parameters'] = "-c #{node['aide']['config']}"
   default['aide']['cron_service'] = 'cron'
@@ -83,6 +88,14 @@ default['aide']['paths'] = {
   '/etc/yum/' => 'NORMAL',
   '/etc/yum.repos.d/' => 'NORMAL',
   '/var/log' => '!',
+  '/var/spool/postfix' => '!',
+  '/var/chef' => '!',
+  '/var/lib/gems' => '!',
+  '/usr/local/rvm/log' => '!',
+  '/root/.cache/pip' => '!',
+  '/var/lib/aide/aide.db' => '!',
+  '/tmp/chef.*' => '!',
+  '/tmp/codedeploy-agent.update.log' => '!',
   '/var/run/utmp' => 'LOG',
   '/etc/audit/' => 'LSPP',
   '/etc/libaudit.conf' => 'LSPP',

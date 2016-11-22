@@ -3,36 +3,34 @@ package 'aide' do
 end
 
 template node['aide']['config'] do
-  notifies :run, 'bash[generate_database]', :delayed
+  notifies :run, 'bash[update_aideconf]', :delayed
   variables(
     database: node['aide']['database'],
     database_out: node['aide']['database_out'],
     gzip_dbout: node['aide']['gzip_dbout'],
+    paths: node['aide']['paths'],
+    macros: node['aide']['macros']
   )
 end
 
-cron_d 'aide' do
-  action :create
-  minute '30'
-  user 'root'
-  command "#{node['aide']['binary']} #{node['aide']['extra_parameters']} --check -V3"
+template '/etc/default/aide' do
+  source 'aide_default.erb'
+  notifies :run, 'bash[update_aideconf]', :delayed
+  variables(
+    mailto: node['aide']['mailto'],
+    command: node['aide']['command'],
+    quiet_reports: node['aide']['quiet_reports']
+  )
 end
 
-cron_d 'aide-detailed' do
-  action :create
-  minute '0'
-  hour '5'
-  weekday '1'
-  user 'root'
-  command "#{node['aide']['binary']} #{node['aide']['extra_parameters']} --check -V5"
-end
-
-file '/etc/cron.daily/aide' do
-  action :delete
+bash 'update_aideconf' do
+  action :nothing
+  not_if { node['aide']['testmode'] == 'true' }
+  code '/usr/sbin/update-aide.conf'
+  notifies :run, 'bash[generate_database]', :delayed
 end
 
 bash 'generate_database' do
   action :nothing
-  not_if { node['aide']['testmode'] == 'true' || File.exists?(node['aide']['database_out']) }
-  code "#{node['aide']['binary']} #{node['aide']['extra_parameters']} --init"
+  code "#{node['aide']['binary_init']} #{node['aide']['extra_parameters']}"
 end

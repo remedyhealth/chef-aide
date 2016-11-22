@@ -13,6 +13,8 @@ default['aide']['dbdir'] = '/var/lib/aide'
 default['aide']['gzip'] = 'yes'
 default['aide']['report_url'] = 'stdout'
 default['aide']['verbose'] = '5'
+default['aide']['database'] = '/var/lib/aide/aide.db'
+default['aide']['database_out'] = '/var/lib/aide/aide.db.new'
 
 case node['platform_family']
 when 'rhel'

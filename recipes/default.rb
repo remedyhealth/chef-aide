@@ -43,3 +43,13 @@ bash 'generate_database' do
   action :nothing
   code "#{node['aide']['binary_init']} #{node['aide']['extra_parameters']}"
 end
+
+if node['aide']['hourly']
+  link '/etc/cron.hourly/aide' do
+    to '/etc/cron.daily/aide'
+  end
+else
+  file '/etc/cron.hourly/aide' do
+    action :delete
+  end
+end

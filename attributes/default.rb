@@ -56,6 +56,7 @@ default['aide']['paths'] = {
   '/usr/src' => '!',
   '/usr/tmp' => '!',
   '/srv' => '!',
+  '/mnt' => '!',
   '/etc' => 'PERMS',
   '/etc/mtab' => '!',
   '/etc/prelink.cache' => '!',

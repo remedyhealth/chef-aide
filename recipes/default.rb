@@ -15,6 +15,7 @@ end
 
 template '/usr/local/bin/aide_slack_hook' do
   source 'aide_slack_hook.erb'
+  mode '0755'
   variables(
     slack_webhook_url: node['aide']['slack_webhook_url']
   )

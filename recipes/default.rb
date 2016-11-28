@@ -47,7 +47,7 @@ end
 if node['aide']['hourly']
   file '/etc/cron.d/aide' do
     content <<-EOH
-MAILTO=cron@remedyhealthmedia.com
+MAILTO=#{node['aide']['mailto']}
 SHELL=/bin/bash
 
 10 * * * * root /bin/sleep $[RANDOM\\%1800]s; /etc/cron.daily/aide

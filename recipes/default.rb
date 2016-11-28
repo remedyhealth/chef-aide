@@ -45,11 +45,16 @@ bash 'generate_database' do
 end
 
 if node['aide']['hourly']
-  link '/etc/cron.hourly/aide' do
-    to '/etc/cron.daily/aide'
+  file '/etc/cron.d/aide' do
+    content <<-EOH
+MAILTO=cron@remedyhealthmedia.com
+SHELL=/bin/bash
+
+10 * * * * root /bin/sleep $[RANDOM\\%1800]s; /etc/cron.daily/aide
+EOH
   end
 else
-  file '/etc/cron.hourly/aide' do
+  file '/etc/cron.d/aide' do
     action :delete
   end
 end

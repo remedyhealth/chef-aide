@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ "$1" == "success" ]; then
+  CHANGED=$(grep -A4 'Summary:' /var/log/aide/aide.log | grep 'Changed entries' | awk '{print $NF}')
+  if [ "${CHANGED}" != "0" ]; then
+    curl -X POST -H 'Content-type: application/json' --data "{'text': '*`hostname -f`* is reporting *${CHANGED}* changed files'}" <%= @slack_webhook_url %>
+  fi
+else
+  curl -X POST -H 'Content-type: application/json' --data "{'text': '*`hostname -f`* had status *${1}*.'}" <%= @slack_webhook_url %>
+fi

@@ -13,12 +13,20 @@ template node['aide']['config'] do
   )
 end
 
+template '/usr/local/bin/aide_slack_hook' do
+  source 'aide_slack_hook.erb'
+  variables(
+    slack_webhook_url: node['aide']['slack_webhook_url']
+  )
+end
+
 template '/etc/default/aide' do
   source 'aide_default.erb'
   notifies :run, 'bash[update_aideconf]', :delayed
   variables(
     mailto: node['aide']['mailto'],
     command: node['aide']['command'],
+    cron_hook: node['aide']['cron_hook'],
     quiet_reports: node['aide']['quiet_reports']
   )
 end

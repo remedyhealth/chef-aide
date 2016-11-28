@@ -18,6 +18,8 @@ default['aide']['database_out'] = '/var/lib/aide/aide.db.new'
 default['aide']['mailto'] = 'root'
 default['aide']['command'] = 'check'
 default['aide']['quiet_reports'] = 'yes'
+default['aide']['cron_hook'] = '/usr/local/bin/aide_slack_hook'
+default['aide']['slack_webhook_url'] = nil
 
 case node['platform_family']
 when 'rhel'
@@ -30,7 +32,7 @@ else
   default['aide']['binary'] = '/usr/bin/aide'
   default['aide']['binary_init'] = '/usr/sbin/aideinit'
   default['aide']['config'] = '/etc/aide/aide.conf'
-  default['aide']['extra_parameters'] = "-c #{node['aide']['config']}"
+  default['aide']['extra_parameters'] = "-c #{node['aide']['config']} -y -f"
   default['aide']['cron_service'] = 'cron'
 end
 
@@ -102,6 +104,7 @@ default['aide']['paths'] = {
   '/environment' => '!',
   '/var/cache' => '!',
   '/.cache' => '!',
+  "/home/.*" => '!',
   '/tmp/codedeploy-agent.update.log' => '!',
   '/var/run/utmp' => 'LOG',
   '/etc/audit/' => 'LSPP',
@@ -133,14 +136,17 @@ default['aide']['paths'] = {
   '/etc/pam.d' => 'LSPP',
   '/etc/security' => 'LSPP',
   '/etc/aliases' => 'LSPP',
-  '/etc/postfix' => 'LSPP',
+  '/etc/postfix' => 'NORMAL',
   '/etc/ssh/sshd_config' => 'LSPP',
   '/etc/ssh/ssh_config' => 'LSPP',
-  '/etc/stunnel' => 'LSPP',
-  '/etc/vsftpd.ftpusers' => 'LSPP',
-  '/etc/vsftpd' => 'LSPP',
   '/etc/issue' => 'LSPP',
   '/etc/issue.net' => 'LSPP',
   '/etc/cups' => 'LSPP',
-  "/root/\..*" => 'PERMS'
+  '/etc/chef/client.rb' => 'LSPP',
+  '/etc/chef/client.pem' => 'LSPP',
+  '/etc/chef/trusted_certs' => 'LSPP',
+  '/etc/rsyslog.conf' => 'LSPP',
+  '/etc/rsyslog.d/' => 'LSPP',
+  "/root/\..*" => 'PERMS',
+  "=/$" => "NORMAL"
 }

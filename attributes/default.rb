@@ -83,6 +83,7 @@ default['aide']['paths'] = {
   '/var/chef' => '!',
   '/var/lib/gems' => '!',
   '/var/lib/apt' => '!',
+  '/var/lib/postfix/' => '!',
   '/var/lib/apt-xapian-index' => '!',
   '/var/lib/ubuntu-release-upgrader/release-upgrade-available' => '!',
   '/var/lib/logrotate' => '!',
@@ -94,7 +95,9 @@ default['aide']['paths'] = {
   '/var/lib/sudo' => '!',
   '/var/cache' => '!',
   '/.cache' => '!',
-  "/home/.*" => '!',
+  '/home/.*' => '!',
+  '/opt/datadog-agent/run/' => '!',
+  '/var/lib/rkhunter' => '!',
   '/var/run/utmp$' => 'LOG',
   '/etc/audit/' => 'LSPP',
   '/etc/libaudit.conf$' => 'LSPP',
@@ -138,3 +141,5 @@ default['aide']['paths'] = {
   "/root/\..*" => 'PERMS',
   "=/$" => "NORMAL"
 }
+
+default['aide']['extra_paths'] = {}

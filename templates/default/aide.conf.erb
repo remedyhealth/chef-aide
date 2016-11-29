@@ -197,3 +197,12 @@ LinkedLog = Log-n
 <%= path %> <%= definition %>
 <% end %>
 <% end %>
+
+# Extra Paths
+<% @extra_paths.each do |path,definition| %>
+<% if definition == '!' %>
+!<%= path %>
+<% else %>
+<%= path %> <%= definition %>
+<% end %>
+<% end %>

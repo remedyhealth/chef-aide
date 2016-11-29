@@ -9,6 +9,7 @@ template node['aide']['config'] do
     database_out: node['aide']['database_out'],
     gzip_dbout: node['aide']['gzip_dbout'],
     paths: node['aide']['paths'],
+    extra_paths: node['aide']['extra_paths'],
     macros: node['aide']['macros']
   )
 end

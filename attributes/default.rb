@@ -94,6 +94,7 @@ default['aide']['paths'] = {
   '/environment' => '!',
   '/var/lib/update-notifier' => '!',
   '/var/lib/sudo' => '!',
+  '/var/www' => '!',
   '/var/cache' => '!',
   '/.cache' => '!',
   '/home/.*' => '!',

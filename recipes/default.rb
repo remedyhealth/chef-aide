@@ -20,6 +20,7 @@ template '/usr/local/bin/aide_slack_hook' do
   variables(
     slack_webhook_url: node['aide']['slack_webhook_url']
   )
+  notifies :run, 'bash[generate_database]', :delayed
 end
 
 template '/etc/default/aide' do

@@ -1,13 +1,38 @@
 #!/bin/bash
 
-if [ "$1" == "success" ]; then
-  CHANGED=$(grep -A4 'Summary:' /var/log/aide/aide.log | grep 'Changed entries' | awk '{print $NF}')
-  if [ -z "$CHANGED" ]; then
-    exit 0
+AIDE_LOG="/var/log/aide/aide.log"
+OUTFILE=`mktemp`
+
+RECORD=no
+IGNORE_NEXT=no
+
+while IFS='' read -r line || [[ -n "$line" ]]; do
+  echo $line | egrep -o "^(\w+) entries:$" > /dev/null
+  if [ $? -eq 0 ]; then
+    RECORD=yes
+    IGNORE_DASH=yes
+    IGNORE_WHITESPACE=yes
+    echo "$line" >> $OUTFILE
+  else
+    if [ "${RECORD}" == "yes" ]; then
+      if [[ $line == *-* ]] && [ "${IGNORE_DASH}" == "yes" ]; then
+        IGNORE_DASH=no
+      elif [ "$line" == "" ] && [ "${IGNORE_WHITESPACE}" == "yes" ] ; then
+        IGNORE_WHITESPACE=no
+      elif [ "$line" == "" ] || [[ $line == *-* ]]; then
+        RECORD=no
+        echo "" >> $OUTFILE
+      else
+        echo $line >> $OUTFILE
+      fi
+    fi
   fi
-  if [ "${CHANGED}" != "0" ]; then
-    curl -s -X POST -H 'Content-type: application/json' --data "{'text': '*`hostname -f`* is reporting *${CHANGED}* changed files'}" <%= @slack_webhook_url %> > /dev/null
-  fi
-else
-  curl -s -X POST -H 'Content-type: application/json' --data "{'text': '*`hostname -f`* had status *${1}*.'}" <%= @slack_webhook_url %> > /dev/null
-fi
+done < "$AIDE_LOG"
+
+OUTPUT=$(sed '$ d' $OUTFILE)
+
+curl -s -X POST -H 'Content-type: application/json' --data "{'text': '*`hostname -f`* reported the following modifications:\n\`\`\`$OUTPUT\`\`\`'}" <%= @slack_webhook_url %> > /dev/null
+
+rm $OUTFILE
+
+exit 0

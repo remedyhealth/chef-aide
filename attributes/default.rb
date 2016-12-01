@@ -143,7 +143,8 @@ default['aide']['paths'] = {
   '/etc/rsyslog.d/' => 'LSPP',
   "/root/\.viminfo$" => '!',
   "/root/\..*" => 'PERMS',
-  "=/$" => "NORMAL"
+  "=/$" => "NORMAL",
+  "/mikesmagicthingthatwillnevermatch$" => "!"
 }
 
 default['aide']['extra_paths'] = {}

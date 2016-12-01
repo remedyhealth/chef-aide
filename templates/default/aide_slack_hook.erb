@@ -38,7 +38,7 @@ if [ "$1" == "success" ]; then
   fi
   rm $OUTFILE
 else
-  curl -s -X POST -H 'Content-type: application/json' --data "{ \"attachments\": [ { \"title\": \"`hostname -f` reported the following modifications:\", \"text\": \"$OUTPUT\" } ]}" <%= @slack_webhook_url %> > /dev/null
+  curl -s -X POST -H 'Content-type: application/json' --data "{'text': '*`hostname -f`* had status *${1}*.'}" <%= @slack_webhook_url %> > /dev/null
 fi
 
 exit 0

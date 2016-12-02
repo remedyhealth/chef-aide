@@ -85,6 +85,7 @@ default['aide']['paths'] = {
   '/var/lib/gems' => '!',
   '/var/lib/apt' => '!',
   '/var/lib/postfix/' => '!',
+  '/var/lib/php5/' => '!',
   '/var/lib/apt-xapian-index' => '!',
   '/var/lib/ubuntu-release-upgrader/release-upgrade-available' => '!',
   '/var/lib/logrotate' => '!',

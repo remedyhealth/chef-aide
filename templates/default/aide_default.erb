@@ -45,7 +45,7 @@ COMMAND=<%= @command %>
 #   file system are only reported once. Possibly dangerous.
 # ifnochange: Copy new database to old database if no changes have
 #   been reported. This is needed for ANF/ARF to work reliably.
-COPYNEWDB=no
+COPYNEWDB=<%= @copynewdb %>
 
 # Set this to yes to truncate the detailed changes part in the mail. The full
 # output will still be listed in the log file.

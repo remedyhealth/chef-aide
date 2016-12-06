@@ -29,6 +29,7 @@ template '/etc/default/aide' do
   variables(
     mailto: node['aide']['mailto'],
     command: node['aide']['command'],
+    copynewdb: node['aide']['copynewdb'],
     cron_hook: node['aide']['cron_hook'],
     quiet_reports: node['aide']['quiet_reports']
   )
